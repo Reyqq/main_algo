@@ -1,0 +1,7 @@
+# Зависимости для сборки документации Sphinx на GitHub Pages
+sphinx
+pydata-sphinx-theme
+sphinx-copybutton
+numpy
+# Добавь сюда другие зависимости, если твой код (в src/) их импортирует
+# Например: pandas, scikit-learn и т.д.
