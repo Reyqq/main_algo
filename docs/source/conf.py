@@ -62,5 +62,5 @@ html_context = {
     "github_user": "Reyqq",
     "github_repo": "main_algo",
     "github_version": "main",
-    "doc_path": "docs/source/",
+    "doc_path": "docs/",
 }
