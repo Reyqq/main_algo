@@ -37,3 +37,30 @@ language = 'ru'
 
 html_theme = 'pydata_sphinx_theme'
 html_static_path = ['_static']
+
+html_theme_options = {
+
+    "navbar_align": "left",
+    "navigation_depth": 4,
+    "show_toc_level": 2,
+    "footer_start": ["copyright"],
+    "footer_end": ["sphinx-version", "theme-version"],
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/Reyqq/Task_bokehs",
+            "icon": "fab fa-github-square",
+        },
+    ],
+    "use_edit_page_button": True,
+    "show_nav_level": 2,
+    "collapse_navigation": False,
+}
+
+
+html_context = {
+    "github_user": "Reyqq",
+    "github_repo": "main_algo",
+    "github_version": "main",
+    "doc_path": "docs/source/",
+}
