@@ -48,7 +48,7 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "GitHub",
-            "url": "https://github.com/Reyqq/Task_bokehs",
+            "url": "https://github.com/Reyqq/main_algo",
             "icon": "fab fa-github-square",
         },
     ],
