@@ -12,6 +12,7 @@ from typing import Optional, List, Tuple, Dict, Any, Union
 
 import numpy as np
 import pandas as pd
+from bokeh.plotting import figure, show, ColumnDataSource
 
 def create_data_sources(df: pd.DataFrame) -> Tuple[pd.DataFrame, ColumnDataSource, ColumnDataSource, ColumnDataSource]:
     """

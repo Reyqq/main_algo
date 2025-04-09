@@ -6,9 +6,8 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title>1. Справочник API &#8212; документация Vlad 1.0</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ez_prof &#8212; документация Vlad 1.0</title>
   
   
   
@@ -45,11 +44,9 @@
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/translations.js?v=cd1d70c9"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'api_reference/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/ez_prof';</script>
     <link rel="index" title="Алфавитный указатель" href="../genindex.html" />
     <link rel="search" title="Поиск" href="../search.html" />
-    <link rel="next" title="1.1. Модуль ez_prof" href="ez_prof1.html" />
-    <link rel="prev" title="Welcome to ez_prof Task Documentation!" href="../index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ru"/>
   <meta name="docsearch:version" content="" />
@@ -128,8 +125,8 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="#">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api_reference/index.html">
     Справочник API
   </a>
 </li>
@@ -193,10 +190,6 @@
   
 
   
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="На этой странице">
-      <span class="fa-solid fa-outdent"></span>
-    </button>
-  
 </div>
 
     </header>
@@ -207,8 +200,10 @@
       
       
       
+        
+      
       <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
         
 
   
@@ -223,8 +218,8 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="#">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api_reference/index.html">
     Справочник API
   </a>
 </li>
@@ -267,18 +262,6 @@
     
   </div>
   
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item">
-<nav class="bd-docs-nav bd-links"
-     aria-label="В этом разделе">
-  <p class="bd-links__title" role="heading" aria-level="1">В этом разделе</p>
-  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="ez_prof1.html">1.1. Модуль ez_prof</a></li>
-</ul>
-</div>
-</nav></div>
-    </div>
-  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
       <div class="sidebar-primary-item">
@@ -314,7 +297,10 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis"><span class="section-number">1. </span>Справочник API</span></li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Код модуля</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">ez_prof</span></li>
   </ul>
 </nav>
 </div>
@@ -331,19 +317,74 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="api">
-<h1><span class="section-number">1. </span>Справочник API<a class="headerlink" href="#api" title="Ссылка на этот заголовок">#</a></h1>
-<p>Этот раздел содержит подробную документацию по всем функциям, доступным в нашей библиотеке.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="ez_prof1.html">1.1. Модуль ez_prof</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ez_prof1.html#ez_prof.create_data_sources"><code class="docutils literal notranslate"><span class="pre">create_data_sources()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</div>
-</section>
+  <h1>Исходный код ez_prof</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Модуль bokehs предоставляет набор функций для создания и настройки финансовых графиков</span>
+<span class="sd">с использованием библиотеки Bokeh.</span>
 
+<span class="sd">Основные функции:</span>
+<span class="sd">- create_data_sources: Подготовка данных для свечных графиков</span>
+<span class="sd">- create_candlestick_chart: Создание базового свечного графика</span>
+<span class="sd">- style_plot: Настройка стиля графика</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">figure</span><span class="p">,</span> <span class="n">show</span><span class="p">,</span> <span class="n">ColumnDataSource</span>
+
+<div class="viewcode-block" id="create_data_sources">
+<a class="viewcode-back" href="../api_reference/ez_prof1.html#ez_prof.create_data_sources">[документация]</a>
+<span class="k">def</span> <span class="nf">create_data_sources</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">ColumnDataSource</span><span class="p">,</span> <span class="n">ColumnDataSource</span><span class="p">,</span> <span class="n">ColumnDataSource</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">    Создает источники данных для графиков свечей.</span>
+
+<span class="sd">    Эта функция обрабатывает входной датафрейм, добавляя новые столбцы для визуализации свечей,</span>
+<span class="sd">    и создает отдельные источники данных для восходящих и нисходящих свечей.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df (pd.DataFrame): Исходный датафрейм с данными. Должен содержать столбцы &#39;open&#39;, &#39;close&#39;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[pd.DataFrame, ColumnDataSource, ColumnDataSource, ColumnDataSource]: Кортеж, содержащий:</span>
+<span class="sd">            - Обработанный датафрейм с дополнительными столбцами.</span>
+<span class="sd">            - ColumnDataSource для восходящих свечей.</span>
+<span class="sd">            - ColumnDataSource для нисходящих свечей.</span>
+<span class="sd">            - ColumnDataSource со всеми данными.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        Функция создает следующие дополнительные столбцы в датафрейме:</span>
+<span class="sd">        - &#39;middle&#39;: среднее значение между &#39;open&#39; и &#39;close&#39;.</span>
+<span class="sd">        - &#39;height_inc&#39;: высота восходящей свечи.</span>
+<span class="sd">        - &#39;height_dec&#39;: высота нисходящей свечи.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; import pandas as pd</span>
+<span class="sd">        &gt;&gt;&gt; df = pd.DataFrame({&#39;open&#39;: [10, 12, 9], &#39;close&#39;: [11, 10, 11]})</span>
+<span class="sd">        &gt;&gt;&gt; df, inc_source, dec_source, all_source = create_data_sources(df)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># Вычисление дополнительных данных для свечей</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;middle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;height_inc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">]</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;height_dec&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Разделение данных на восходящие и нисходящие свечи</span>
+    <span class="n">inc</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">]</span>
+    <span class="n">dec</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Создание источников данных</span>
+    <span class="n">df_inc</span> <span class="o">=</span> <span class="n">ColumnDataSource</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">inc</span><span class="p">])</span>
+    <span class="n">df_dec</span> <span class="o">=</span> <span class="n">ColumnDataSource</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">dec</span><span class="p">])</span>
+    <span class="n">df_source</span> <span class="o">=</span> <span class="n">ColumnDataSource</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df</span><span class="p">,</span> <span class="n">df_inc</span><span class="p">,</span> <span class="n">df_dec</span><span class="p">,</span> <span class="n">df_source</span></div>
+
+</pre></div>
 
                 </article>
               
@@ -354,61 +395,12 @@
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="../index.html"
-       title="предыдущая страница">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">назад</p>
-        <p class="prev-next-title">Welcome to ez_prof Task Documentation!</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="ez_prof1.html"
-       title="следующая страница">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">вперёд</p>
-        <p class="prev-next-title"><span class="section-number">1.1. </span>Модуль ez_prof</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
             </div>
             
             
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-
-  
-  <div class="tocsection editthispage">
-    <a href="https://github.com/Reyqq/main_algo/edit/master/docs/source/api_reference/index.rst">
-      <i class="fa-solid fa-pencil"></i>
-      
-      
-        
-          Редактировать на GitHub
-        
-      
-    </a>
-  </div>
-</div>
-
-  <div class="sidebar-secondary-item">
-  <div role="note" aria-label="source link">
-    <h3>Эта страница</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/api_reference/index.rst.txt"
-            rel="nofollow">Исходный текст</a></li>
-    </ul>
-   </div></div>
-
-</div></div>
               
             
           </div>

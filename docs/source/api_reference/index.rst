@@ -7,4 +7,4 @@
 .. toctree::
    :maxdepth: 3
 
-   ez_prof
+   ez_prof1
