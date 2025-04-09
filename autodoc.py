@@ -5,8 +5,8 @@ from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 
 # Путь к вашей документации
-docs_path = "docs/source"
-build_command = "sphinx-build docs/source docs/"
+docs_path = "source"
+build_command = "sphinx-build source docs/"
 
 
 class DocHandler(FileSystemEventHandler):
