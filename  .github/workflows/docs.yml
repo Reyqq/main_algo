@@ -1,36 +1,27 @@
-name: Build and Deploy Sphinx Docs
+name: documentation
 
-on:
-  push:
-    branches:
-      - main # Или твоя основная ветка
+on: [push, pull_request, workflow_dispatch]
 
 permissions:
-  contents: write # Необходимо для деплоя в gh-pages
+  contents: write
 
 jobs:
-  build-deploy:
+  docs:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11' # Выбери нужную версию Python
-
-    - name: Install dependencies
-      run: |
-        pip install sphinx pydata-sphinx-theme myst-parser # Добавь другие зависимости, если нужно
-
-    - name: Build Sphinx documentation
-      run: |
-        cd docs
-        sphinx-build -b html source build/html 
-
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build/html 
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+      - name: Install dependencies
+        run: |
+          pip install sphinx sphinx_rtd_theme  bokeh sphinx-copybutton pydata_sphinx_theme
+      - name: Sphinx build
+        run: |
+          python -m sphinx-build -b html source build/html
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        with:
+          publish_branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
