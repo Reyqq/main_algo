@@ -19,7 +19,7 @@ extensions = [
   'sphinx.ext.napoleon',
   'sphinx.ext.viewcode',
   'myst_parser',
-  'pydata-sphinx-theme'
+  'pydata_sphinx_theme',
   ]
 
 templates_path = ['_templates']
@@ -38,5 +38,5 @@ source_suffix = {
 }
 
 
-html_theme = 'pydata-sphinx-theme'
+html_theme = 'pydata_sphinx_theme'
 html_static_path = ['_static']
