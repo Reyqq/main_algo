@@ -1,17 +1,21 @@
-.. v documentation master file, created by
-   sphinx-quickstart on Wed Apr  9 17:36:56 2025.
+.. My Cool Project documentation master file, created by
+   sphinx-quickstart on Wed Apr 9 19:00:00 2025.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-v documentation
-===============
-
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
-
+Добро пожаловать в документацию My Cool Project!
+================================================
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Содержание:
+
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
 
