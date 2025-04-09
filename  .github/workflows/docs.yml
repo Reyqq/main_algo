@@ -17,7 +17,7 @@ jobs:
           pip install sphinx sphinx_rtd_theme  bokeh sphinx-copybutton pydata_sphinx_theme
       - name: Sphinx build
         run: |
-          python -m sphinx docs/source docs/
+          python -m sphinx source docs/
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
