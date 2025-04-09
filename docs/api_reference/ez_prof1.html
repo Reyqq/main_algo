@@ -342,43 +342,31 @@
 - create_candlestick_chart: Создание базового свечного графика
 - style_plot: Настройка стиля графика</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="ez_prof.create_data_sources">
-<span class="sig-prename descclassname"><span class="pre">ez_prof.</span></span><span class="sig-name descname"><span class="pre">create_data_sources</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ColumnDataSource</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ColumnDataSource</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ColumnDataSource</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ez_prof.html#create_data_sources"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#ez_prof.create_data_sources" title="Ссылка на это определение">#</a></dt>
-<dd><p>Создает источники данных для графиков свечей.</p>
-<p>Эта функция обрабатывает входной датафрейм, добавляя новые столбцы для визуализации свечей,
-и создает отдельные источники данных для восходящих и нисходящих свечей.</p>
+<dt class="sig sig-object py" id="ez_prof.customize_plot_styles">
+<span class="sig-prename descclassname"><span class="pre">ez_prof.</span></span><span class="sig-name descname"><span class="pre">customize_plot_styles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">figure</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/ez_prof.html#customize_plot_styles"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#ez_prof.customize_plot_styles" title="Ссылка на это определение">#</a></dt>
+<dd><p>Настраивает стили графика Bokeh для улучшения его внешнего вида.</p>
+<p>Эта функция применяет ряд стилистических изменений к объекту Figure из Bokeh,
+включая цвета фона, осей, сетки, а также настройки отображения меток и линий.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Параметры<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>df</strong> (<em>pd.DataFrame</em>) – Исходный датафрейм с данными. Должен содержать столбцы „open“, „close“.</p>
+<dd class="field-odd"><p><strong>p</strong> (<em>bokeh.plotting.Figure</em>) – Объект Figure из Bokeh, который нужно настроить.</p>
 </dd>
 <dt class="field-even">Результат<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>Кортеж, содержащий:</dt><dd><ul class="simple">
-<li><p>Обработанный датафрейм с дополнительными столбцами.</p></li>
-<li><p>ColumnDataSource для восходящих свечей.</p></li>
-<li><p>ColumnDataSource для нисходящих свечей.</p></li>
-<li><p>ColumnDataSource со всеми данными.</p></li>
-</ul>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>Функция изменяет переданный объект Figure и ничего не возвращает.</p>
 </dd>
 <dt class="field-odd">Тип результата<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tuple[pd.DataFrame, ColumnDataSource, ColumnDataSource, ColumnDataSource]</p>
+<dd class="field-odd"><p>None</p>
 </dd>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Примечание</p>
-<p>Функция создает следующие дополнительные столбцы в датафрейме:
-- „middle“: среднее значение между „open“ и „close“.
-- „height_inc“: высота восходящей свечи.
-- „height_dec“: высота нисходящей свечи.</p>
-</div>
-<p class="rubric">Пример</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;open&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="s1">&#39;close&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">]})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="p">,</span> <span class="n">inc_source</span><span class="p">,</span> <span class="n">dec_source</span><span class="p">,</span> <span class="n">all_source</span> <span class="o">=</span> <span class="n">create_data_sources</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</pre></div>
+<p>Эта функция модифицирует переданный объект Figure напрямую.
+Основные изменения включают:
+- Установку темного фона (#181c27)
+- Настройку цветов и стилей осей
+- Настройку сетки (пунктирные линии, прозрачность)
+- Удаление линий тиков
+- Автоскрытие панели инструментов</p>
 </div>
 </dd></dl>
 
@@ -423,7 +411,7 @@
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ez_prof.create_data_sources"><code class="docutils literal notranslate"><span class="pre">create_data_sources()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ez_prof.customize_plot_styles"><code class="docutils literal notranslate"><span class="pre">customize_plot_styles()</span></code></a></li>
 </ul>
   </nav></div>
 

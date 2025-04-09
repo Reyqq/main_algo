@@ -12,52 +12,66 @@ from typing import Optional, List, Tuple, Dict, Any, Union
 
 import numpy as np
 import pandas as pd
+from bokeh.layouts import column, row
+from bokeh.models import Span, LabelSet, HoverTool, Slider, DatePicker, Toggle, CrosshairTool, FreehandDrawTool
+from bokeh.models.callbacks import CustomJS
+from bokeh.models.formatters import DatetimeTickFormatter
 from bokeh.plotting import figure, show, ColumnDataSource
 
-def create_data_sources(df: pd.DataFrame) -> Tuple[pd.DataFrame, ColumnDataSource, ColumnDataSource, ColumnDataSource]:
+
+def customize_plot_styles(p: figure) -> None:
     """
 
 
-    Создает источники данных для графиков свечей.
+    Настраивает стили графика Bokeh для улучшения его внешнего вида.
 
-    Эта функция обрабатывает входной датафрейм, добавляя новые столбцы для визуализации свечей,
-    и создает отдельные источники данных для восходящих и нисходящих свечей.
+    Эта функция применяет ряд стилистических изменений к объекту Figure из Bokeh,
+    включая цвета фона, осей, сетки, а также настройки отображения меток и линий.
 
     Args:
-        df (pd.DataFrame): Исходный датафрейм с данными. Должен содержать столбцы 'open', 'close'.
+        p (bokeh.plotting.Figure): Объект Figure из Bokeh, который нужно настроить.
 
     Returns:
-        Tuple[pd.DataFrame, ColumnDataSource, ColumnDataSource, ColumnDataSource]: Кортеж, содержащий:
-            - Обработанный датафрейм с дополнительными столбцами.
-            - ColumnDataSource для восходящих свечей.
-            - ColumnDataSource для нисходящих свечей.
-            - ColumnDataSource со всеми данными.
+        None: Функция изменяет переданный объект Figure и ничего не возвращает.
 
     Note:
-        Функция создает следующие дополнительные столбцы в датафрейме:
-        - 'middle': среднее значение между 'open' и 'close'.
-        - 'height_inc': высота восходящей свечи.
-        - 'height_dec': высота нисходящей свечи.
-
-    Example:
-        >>> import pandas as pd
-        >>> df = pd.DataFrame({'open': [10, 12, 9], 'close': [11, 10, 11]})
-        >>> df, inc_source, dec_source, all_source = create_data_sources(df)
+        Эта функция модифицирует переданный объект Figure напрямую.
+        Основные изменения включают:
+        - Установку темного фона (#181c27)
+        - Настройку цветов и стилей осей
+        - Настройку сетки (пунктирные линии, прозрачность)
+        - Удаление линий тиков
+        - Автоскрытие панели инструментов
     """
-    df = df.copy()
+    # Настройка фона
+    p.background_fill_color = "#181c27"
+    p.background_fill_alpha = 1
+    p.border_fill_color = "#181c27"
 
-    # Вычисление дополнительных данных для свечей
-    df['middle'] = (df['open'] + df['close']) / 2
-    df['height_inc'] = df['close'] - df['open']
-    df['height_dec'] = df['open'] - df['close']
+    # Настройка оси X
+    p.xaxis.major_label_orientation = "horizontal"
+    p.xaxis.axis_label_text_color = "#b2b5be"
+    p.xaxis.major_label_text_color = "#b2b5be"
+    p.xaxis.axis_line_width = 1.0
+    p.xaxis.axis_line_color = "#2a2e39"
+    p.xaxis.minor_tick_line_color = None
+    p.xaxis.major_tick_line_color = None  # Убрать линии тиков по оси X
 
-    # Разделение данных на восходящие и нисходящие свечи
-    inc = df['close'] > df['open']
-    dec = df['open'] > df['close']
+    # Настройка оси Y
+    p.yaxis.axis_label_text_color = "#b2b5be"
+    p.yaxis.major_label_text_color = "#b2b5be"
+    p.yaxis.axis_line_width = 1.0
+    p.yaxis.axis_line_color = "#2a2e39"
+    p.yaxis.minor_tick_line_color = None
+    p.yaxis.major_tick_line_color = None  # Убрать линии тиков по оси Y
 
-    # Создание источников данных
-    df_inc = ColumnDataSource(df[inc])
-    df_dec = ColumnDataSource(df[dec])
-    df_source = ColumnDataSource(df)
+    # Настройка сетки
+    p.grid.grid_line_color = "#2a2e39"
+    p.outline_line_color = "#2a2e39"
+    p.xgrid.grid_line_dash = [2, 2]
+    p.ygrid.grid_line_dash = [2, 2]
+    p.xgrid.grid_line_alpha = 0
+    p.ygrid.grid_line_alpha = 0
 
-    return df, df_inc, df_dec, df_source
+    # Дополнительные настройки
+    p.toolbar.autohide = True

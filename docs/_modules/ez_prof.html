@@ -332,57 +332,71 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">bokeh.layouts</span> <span class="kn">import</span> <span class="n">column</span><span class="p">,</span> <span class="n">row</span>
+<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="kn">import</span> <span class="n">Span</span><span class="p">,</span> <span class="n">LabelSet</span><span class="p">,</span> <span class="n">HoverTool</span><span class="p">,</span> <span class="n">Slider</span><span class="p">,</span> <span class="n">DatePicker</span><span class="p">,</span> <span class="n">Toggle</span><span class="p">,</span> <span class="n">CrosshairTool</span><span class="p">,</span> <span class="n">FreehandDrawTool</span>
+<span class="kn">from</span> <span class="nn">bokeh.models.callbacks</span> <span class="kn">import</span> <span class="n">CustomJS</span>
+<span class="kn">from</span> <span class="nn">bokeh.models.formatters</span> <span class="kn">import</span> <span class="n">DatetimeTickFormatter</span>
 <span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">figure</span><span class="p">,</span> <span class="n">show</span><span class="p">,</span> <span class="n">ColumnDataSource</span>
 
-<div class="viewcode-block" id="create_data_sources">
-<a class="viewcode-back" href="../api_reference/ez_prof1.html#ez_prof.create_data_sources">[документация]</a>
-<span class="k">def</span> <span class="nf">create_data_sources</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">ColumnDataSource</span><span class="p">,</span> <span class="n">ColumnDataSource</span><span class="p">,</span> <span class="n">ColumnDataSource</span><span class="p">]:</span>
+
+<div class="viewcode-block" id="customize_plot_styles">
+<a class="viewcode-back" href="../api_reference/ez_prof1.html#ez_prof.customize_plot_styles">[документация]</a>
+<span class="k">def</span> <span class="nf">customize_plot_styles</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">figure</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 
 
-<span class="sd">    Создает источники данных для графиков свечей.</span>
+<span class="sd">    Настраивает стили графика Bokeh для улучшения его внешнего вида.</span>
 
-<span class="sd">    Эта функция обрабатывает входной датафрейм, добавляя новые столбцы для визуализации свечей,</span>
-<span class="sd">    и создает отдельные источники данных для восходящих и нисходящих свечей.</span>
+<span class="sd">    Эта функция применяет ряд стилистических изменений к объекту Figure из Bokeh,</span>
+<span class="sd">    включая цвета фона, осей, сетки, а также настройки отображения меток и линий.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        df (pd.DataFrame): Исходный датафрейм с данными. Должен содержать столбцы &#39;open&#39;, &#39;close&#39;.</span>
+<span class="sd">        p (bokeh.plotting.Figure): Объект Figure из Bokeh, который нужно настроить.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Tuple[pd.DataFrame, ColumnDataSource, ColumnDataSource, ColumnDataSource]: Кортеж, содержащий:</span>
-<span class="sd">            - Обработанный датафрейм с дополнительными столбцами.</span>
-<span class="sd">            - ColumnDataSource для восходящих свечей.</span>
-<span class="sd">            - ColumnDataSource для нисходящих свечей.</span>
-<span class="sd">            - ColumnDataSource со всеми данными.</span>
+<span class="sd">        None: Функция изменяет переданный объект Figure и ничего не возвращает.</span>
 
 <span class="sd">    Note:</span>
-<span class="sd">        Функция создает следующие дополнительные столбцы в датафрейме:</span>
-<span class="sd">        - &#39;middle&#39;: среднее значение между &#39;open&#39; и &#39;close&#39;.</span>
-<span class="sd">        - &#39;height_inc&#39;: высота восходящей свечи.</span>
-<span class="sd">        - &#39;height_dec&#39;: высота нисходящей свечи.</span>
-
-<span class="sd">    Example:</span>
-<span class="sd">        &gt;&gt;&gt; import pandas as pd</span>
-<span class="sd">        &gt;&gt;&gt; df = pd.DataFrame({&#39;open&#39;: [10, 12, 9], &#39;close&#39;: [11, 10, 11]})</span>
-<span class="sd">        &gt;&gt;&gt; df, inc_source, dec_source, all_source = create_data_sources(df)</span>
+<span class="sd">        Эта функция модифицирует переданный объект Figure напрямую.</span>
+<span class="sd">        Основные изменения включают:</span>
+<span class="sd">        - Установку темного фона (#181c27)</span>
+<span class="sd">        - Настройку цветов и стилей осей</span>
+<span class="sd">        - Настройку сетки (пунктирные линии, прозрачность)</span>
+<span class="sd">        - Удаление линий тиков</span>
+<span class="sd">        - Автоскрытие панели инструментов</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="c1"># Настройка фона</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">background_fill_color</span> <span class="o">=</span> <span class="s2">&quot;#181c27&quot;</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">background_fill_alpha</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">border_fill_color</span> <span class="o">=</span> <span class="s2">&quot;#181c27&quot;</span>
 
-    <span class="c1"># Вычисление дополнительных данных для свечей</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;middle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;height_inc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;height_dec&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span>
+    <span class="c1"># Настройка оси X</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">major_label_orientation</span> <span class="o">=</span> <span class="s2">&quot;horizontal&quot;</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">axis_label_text_color</span> <span class="o">=</span> <span class="s2">&quot;#b2b5be&quot;</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">major_label_text_color</span> <span class="o">=</span> <span class="s2">&quot;#b2b5be&quot;</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">axis_line_width</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">axis_line_color</span> <span class="o">=</span> <span class="s2">&quot;#2a2e39&quot;</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">minor_tick_line_color</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">major_tick_line_color</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Убрать линии тиков по оси X</span>
 
-    <span class="c1"># Разделение данных на восходящие и нисходящие свечи</span>
-    <span class="n">inc</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">]</span>
-    <span class="n">dec</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span>
+    <span class="c1"># Настройка оси Y</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">axis_label_text_color</span> <span class="o">=</span> <span class="s2">&quot;#b2b5be&quot;</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">major_label_text_color</span> <span class="o">=</span> <span class="s2">&quot;#b2b5be&quot;</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">axis_line_width</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">axis_line_color</span> <span class="o">=</span> <span class="s2">&quot;#2a2e39&quot;</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">minor_tick_line_color</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">major_tick_line_color</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Убрать линии тиков по оси Y</span>
 
-    <span class="c1"># Создание источников данных</span>
-    <span class="n">df_inc</span> <span class="o">=</span> <span class="n">ColumnDataSource</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">inc</span><span class="p">])</span>
-    <span class="n">df_dec</span> <span class="o">=</span> <span class="n">ColumnDataSource</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">dec</span><span class="p">])</span>
-    <span class="n">df_source</span> <span class="o">=</span> <span class="n">ColumnDataSource</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="c1"># Настройка сетки</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">grid_line_color</span> <span class="o">=</span> <span class="s2">&quot;#2a2e39&quot;</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">outline_line_color</span> <span class="o">=</span> <span class="s2">&quot;#2a2e39&quot;</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">xgrid</span><span class="o">.</span><span class="n">grid_line_dash</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">ygrid</span><span class="o">.</span><span class="n">grid_line_dash</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">xgrid</span><span class="o">.</span><span class="n">grid_line_alpha</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">ygrid</span><span class="o">.</span><span class="n">grid_line_alpha</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="k">return</span> <span class="n">df</span><span class="p">,</span> <span class="n">df_inc</span><span class="p">,</span> <span class="n">df_dec</span><span class="p">,</span> <span class="n">df_source</span></div>
+    <span class="c1"># Дополнительные настройки</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">toolbar</span><span class="o">.</span><span class="n">autohide</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 </pre></div>
 
