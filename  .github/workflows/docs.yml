@@ -18,7 +18,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11.11' # Выбери нужную версию Python
+        python-version: '3.11' # Выбери нужную версию Python
 
     - name: Install dependencies
       run: |
@@ -33,6 +33,4 @@ jobs:
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build/html # Укажи путь к собранной документации
-        # Или если Makefile/conf.py в папке 'docs':
-        # publish_dir: ./docs/build/html
+        publish_dir: ./build/html 
