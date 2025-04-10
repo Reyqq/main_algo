@@ -4,20 +4,21 @@ import bokeh
 import pandas
 import numpy
 import typing
+import pydata_sphinx_theme
 sys.path.insert(0, os.path.abspath('../../code'))
 
-project = 'Vlad'
+project = 'Библиотека ГА для трейдинга'
 copyright = '2025, Reyqq'
 author = 'Reyqq'
 release = '1.0'
 
 
-import pydata_sphinx_theme
+
 
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.viewcode',
-    'sphinx.ext.napoleon',
+    'sphinx.ext.autodoc',           # Импорт документации из докстрингов
+    'sphinx.ext.viewcode',          # Добавление ссылок на исходный код
+    'sphinx.ext.napoleon',          # Поддержка Google/NumPy стилей докстрингов
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.autodoc.typehints',
     'sphinx_copybutton',
@@ -30,6 +31,7 @@ extensions = [
 autosectionlabel_prefix_document = True
 source_encoding = 'utf-8-sig'
 autodoc_member_order = 'bysource'
+autosummary_generate = True
 
 templates_path = ['_templates']
 exclude_patterns = []
