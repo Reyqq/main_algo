@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>1. Справочник API &#8212; документация Библиотека ГА для трейдинга 1.0</title>
+    <title>Модуль Утилит (utils) &#8212; документация Библиотека ГА для трейдинга 1.0</title>
   
   
   
@@ -45,11 +45,9 @@
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/translations.js?v=cd1d70c9"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'api_reference/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/utils';</script>
     <link rel="index" title="Алфавитный указатель" href="../genindex.html" />
     <link rel="search" title="Поиск" href="../search.html" />
-    <link rel="next" title="1.1. Модуль ez_prof" href="ez_prof1.html" />
-    <link rel="prev" title="Welcome to ez_prof Task Documentation!" href="../index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ru"/>
   <meta name="docsearch:version" content="" />
@@ -128,8 +126,8 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="#">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api_reference/index.html">
     Справочник API
   </a>
 </li>
@@ -223,8 +221,8 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="#">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api_reference/index.html">
     Справочник API
   </a>
 </li>
@@ -272,10 +270,7 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="В этом разделе">
   <p class="bd-links__title" role="heading" aria-level="1">В этом разделе</p>
-  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="ez_prof1.html">1.1. Модуль ez_prof</a></li>
-</ul>
-</div>
+  <div class="bd-toc-item navbar-nav"></div>
 </nav></div>
     </div>
   
@@ -314,7 +309,7 @@
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis"><span class="section-number">1. </span>Справочник API</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Модуль Утилит (<cite>utils</cite>)</span></li>
   </ul>
 </nav>
 </div>
@@ -331,17 +326,74 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="api">
-<h1><span class="section-number">1. </span>Справочник API<a class="headerlink" href="#api" title="Ссылка на этот заголовок">#</a></h1>
-<p>Этот раздел содержит подробную документацию по всем функциям, доступным в нашей библиотеке.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="ez_prof1.html">1.1. Модуль ez_prof</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ez_prof1.html#ez_prof.customize_plot_styles"><code class="docutils literal notranslate"><span class="pre">customize_plot_styles()</span></code></a></li>
+  <section id="module-utils">
+<span id="utils"></span><span id="api-utils"></span><h1>Модуль Утилит (<cite>utils</cite>)<a class="headerlink" href="#module-utils" title="Ссылка на этот заголовок">#</a></h1>
+<p>Модуль вспомогательных утилит.</p>
+<p>Содержит функции для сериализации, преобразования типов данных,
+масштабирования, вычисления вероятностей, работы с файлами и данными.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.save_pickle">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">save_pickle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/utils.html#save_pickle"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#utils.save_pickle" title="Ссылка на это определение">#</a></dt>
+<dd><p>Сохраняет объект Python в файл с использованием pickle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Any</em>) – Объект Python для сохранения.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Путь к файлу, в который будет сохранен объект.
+Расширение файла обычно .pkl или .pickle.</p></li>
 </ul>
-</li>
-</ul>
-</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.load_pickle">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">load_pickle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/utils.html#load_pickle"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#utils.load_pickle" title="Ссылка на это определение">#</a></dt>
+<dd><p>Загружает объект Python из файла pickle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Путь к файлу pickle для загрузки.</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Загруженный объект Python.</p>
+</dd>
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.lst_to_array">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">lst_to_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span></span></span><a class="reference internal" href="../_modules/utils.html#lst_to_array"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#utils.lst_to_array" title="Ссылка на это определение">#</a></dt>
+<dd><p>Декоратор для преобразования списков в NumPy массивы в аргументах функции.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.array_to_lst">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">array_to_lst</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/utils.html#array_to_lst"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#utils.array_to_lst" title="Ссылка на это определение">#</a></dt>
+<dd><p>Декоратор для преобразования NumPy массивов в списки в аргументах функции.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.standard_scaler">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">standard_scaler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/utils.html#standard_scaler"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#utils.standard_scaler" title="Ссылка на это определение">#</a></dt>
+<dd><p>Стандартизирует массив (вычитает среднее и делит на стандартное отклонение).</p>
+<p>Применяет стандартизацию (Z-score normalization).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>array</strong> (<em>np.ndarray</em>) – Входной NumPy массив для стандартизации.
+Декоратор &#64;lst_to_array преобразует список в массив, если нужно.</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Стандартизированный массив. Имеет среднее ~0 и стд. отклонение ~1.</p>
+</dd>
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
@@ -354,24 +406,6 @@
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="../index.html"
-       title="предыдущая страница">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">назад</p>
-        <p class="prev-next-title">Welcome to ez_prof Task Documentation!</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="ez_prof1.html"
-       title="следующая страница">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">вперёд</p>
-        <p class="prev-next-title"><span class="section-number">1.1. </span>Модуль ez_prof</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -384,10 +418,26 @@
 
 
   <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> На этой странице
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utils.save_pickle"><code class="docutils literal notranslate"><span class="pre">save_pickle()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utils.load_pickle"><code class="docutils literal notranslate"><span class="pre">load_pickle()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utils.lst_to_array"><code class="docutils literal notranslate"><span class="pre">lst_to_array()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utils.array_to_lst"><code class="docutils literal notranslate"><span class="pre">array_to_lst()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utils.standard_scaler"><code class="docutils literal notranslate"><span class="pre">standard_scaler()</span></code></a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
 
   
   <div class="tocsection editthispage">
-    <a href="https://github.com/Reyqq/main_algo/edit/master/docs/source/api_reference/index.rst">
+    <a href="https://github.com/Reyqq/main_algo/edit/master/docs/source/api/utils.rst">
       <i class="fa-solid fa-pencil"></i>
       
       
@@ -403,7 +453,7 @@
   <div role="note" aria-label="source link">
     <h3>Эта страница</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/api_reference/index.rst.txt"
+      <li><a href="../_sources/api/utils.rst.txt"
             rel="nofollow">Исходный текст</a></li>
     </ul>
    </div></div>
