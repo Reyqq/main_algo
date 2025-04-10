@@ -3,9 +3,9 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-====================================
+======================================
 Welcome to ez_prof Task Documentation!
-====================================
+======================================
 
 .. warning::
    This library is under heavy development.
@@ -26,6 +26,8 @@ Go inferno or dust??
    :caption: Основные разделы:
 
    api_reference/index
+   api/index
+   api/utils
 
 
 
