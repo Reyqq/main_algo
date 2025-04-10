@@ -7,13 +7,10 @@
 Welcome to ez_prof Task Documentation!
 ======================================
 
-.. warning::
-   This library is under heavy development.
 
 Overview
 --------
 
-Go inferno or dust??
 
 Содержание
 ----------
@@ -25,7 +22,6 @@ Go inferno or dust??
    :hidden:
    :caption: Основные разделы:
 
-   api_reference/index
    api/index
  
 
