@@ -126,7 +126,7 @@
   <ul class="bd-navbar-elements navbar-nav">
     
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../api_reference/index.html">
+  <a class="nav-link nav-internal" href="../api/index.html">
     Справочник API
   </a>
 </li>
@@ -219,7 +219,7 @@
   <ul class="bd-navbar-elements navbar-nav">
     
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../api_reference/index.html">
+  <a class="nav-link nav-internal" href="../api/index.html">
     Справочник API
   </a>
 </li>
@@ -412,7 +412,165 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        np.ndarray: Стандартизированный массив. Имеет среднее ~0 и стд. отклонение ~1.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">array</span> <span class="o">-</span> <span class="n">array</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="o">/</span><span class="n">array</span><span class="o">.</span><span class="n">std</span><span class="p">()</span></div>
+    <span class="k">return</span> <span class="p">(</span><span class="n">array</span> <span class="o">-</span> <span class="n">array</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">array</span><span class="o">.</span><span class="n">std</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="get_probabilities">
+<a class="viewcode-back" href="../api/utils.html#utils.get_probabilities">[документация]</a>
+<span class="nd">@lst_to_array</span>
+<span class="k">def</span> <span class="nf">get_probabilities</span><span class="p">(</span><span class="n">array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">beta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Преобразует массив значений в массив вероятностей различными методами.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        array (np.ndarray): Входной массив значений (например, оценки или fitness).</span>
+<span class="sd">                            Декоратор @lst_to_array преобразует список в массив.</span>
+<span class="sd">        method (str, optional): Метод преобразования. Доступные методы:</span>
+<span class="sd">            &#39;default&#39;: Простое нормирование делением на сумму.</span>
+<span class="sd">            &#39;rank&#39;: Ранговое нормирование (чем выше ранг, тем выше вероятность).</span>
+<span class="sd">            &#39;softmax&#39;: Softmax преобразование с параметром beta.</span>
+<span class="sd">            &#39;uniform&#39;: Равномерное распределение (эквивалентно softmax с beta=0).</span>
+<span class="sd">            По умолчанию &quot;default&quot;.</span>
+<span class="sd">        beta (float, optional): Параметр для метода &#39;softmax&#39;, контролирующий</span>
+<span class="sd">                                &quot;резкость&quot; распределения. По умолчанию 1.0.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: Массив вероятностей, сумма элементов которого равна 1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">softmax</span><span class="p">(</span><span class="n">arr</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">beta_param</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Внутренняя функция для Softmax преобразования.&quot;&quot;&quot;</span>
+        <span class="c1"># Стандартизация перед softmax для численной стабильности</span>
+        <span class="n">scaled_arr</span> <span class="o">=</span> <span class="n">standard_scaler</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+        <span class="n">exp_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">beta_param</span> <span class="o">*</span> <span class="n">scaled_arr</span><span class="p">)</span>
+        <span class="n">probabilities</span> <span class="o">=</span> <span class="n">exp_array</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">exp_array</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">probabilities</span>
+    
+    <span class="k">match</span> <span class="n">method</span><span class="p">:</span>
+        <span class="k">case</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span>
+            <span class="n">probabilities</span> <span class="o">=</span> <span class="n">array</span> <span class="o">/</span> <span class="n">array</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">case</span> <span class="s2">&quot;rank&quot;</span><span class="p">:</span>
+            <span class="n">reversed_ranks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">array</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">probabilities</span> <span class="o">=</span> <span class="n">reversed_ranks</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">reversed_ranks</span><span class="p">)</span>
+        <span class="k">case</span> <span class="s2">&quot;softmax&quot;</span><span class="p">:</span>
+            <span class="n">probabilities</span> <span class="o">=</span> <span class="n">softmax</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
+        <span class="k">case</span> <span class="s2">&quot;uniform&quot;</span><span class="p">:</span>
+            <span class="n">probabilities</span> <span class="o">=</span> <span class="n">softmax</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown </span><span class="si">{</span><span class="n">method</span><span class="w"> </span><span class="si">= }</span><span class="s2">, choose available methods </span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">PROBABILITIES_METHODS</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">probabilities</span></div>
+
+
+
+<div class="viewcode-block" id="select_method">
+<a class="viewcode-back" href="../api/utils.html#utils.select_method">[документация]</a>
+<span class="k">def</span> <span class="nf">select_method</span><span class="p">(</span><span class="n">config_proba</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Выбирает метод случайным образом на основе заданных вероятностей.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config_proba (Dict[str, float]): Словарь, где ключи - названия методов,</span>
+<span class="sd">                                         а значения - их вероятности выбора.</span>
+<span class="sd">                                         Сумма вероятностей должна быть равна 1.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Случайно выбранное название метода.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">methods</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">config_proba</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">probs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">config_proba</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">methods</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">probs</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="get_action_idxes">
+<a class="viewcode-back" href="../api/utils.html#utils.get_action_idxes">[документация]</a>
+<span class="k">def</span> <span class="nf">get_action_idxes</span><span class="p">(</span><span class="n">n_obs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">proba</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Генерирует индексы для выполнения действия на основе вероятности.</span>
+
+<span class="sd">    Для каждого из `n_obs` наблюдений генерируется случайное число. Если оно</span>
+<span class="sd">    меньше `proba`, индекс этого наблюдения добавляется в результат.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        n_obs (int): Общее количество наблюдений (или потенциальных действий).</span>
+<span class="sd">        proba (float): Вероятность выполнения действия для каждого наблюдения (от 0 до 1).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: Массив целых чисел - индексы наблюдений, для которых</span>
+<span class="sd">                    должно быть выполнено действие.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">idxes_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">((</span><span class="n">n_obs</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">proba</span>
+    <span class="n">action_idxes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">idxes_mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">action_idxes</span></div>
+
+
+
+<span class="c1"># --- Функции работы с файлами ---</span>
+
+<div class="viewcode-block" id="get_file_rowcols">
+<a class="viewcode-back" href="../api/utils.html#utils.get_file_rowcols">[документация]</a>
+<span class="k">def</span> <span class="nf">get_file_rowcols</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Получает количество строк и столбцов для файлов Parquet или HDF5.</span>
+
+<span class="sd">    Примечание: Работает только для стандартных табличных структур.</span>
+<span class="sd">    Для HDF5 предполагается структура &#39;table/columns&#39; и одинаковое</span>
+<span class="sd">    количество строк во всех столбцах (проверяется по первому столбцу).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path (str): Путь к файлу (.parquet или .hdf5).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[int, int]: Кортеж (количество строк, количество столбцов).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">extension</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">match</span> <span class="n">extension</span><span class="p">:</span>
+        <span class="k">case</span> <span class="s2">&quot;parquet&quot;</span><span class="p">:</span>
+            <span class="n">pq_file</span> <span class="o">=</span> <span class="n">pq</span><span class="o">.</span><span class="n">ParquetFile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="n">n_rows</span> <span class="o">=</span> <span class="n">pq_file</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">num_rows</span>
+            <span class="n">n_cols</span> <span class="o">=</span> <span class="n">pq_file</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">num_columns</span>
+        <span class="k">case</span> <span class="s2">&quot;hdf5&quot;</span><span class="p">:</span> <span class="c1"># для файлов где в каждой колонке одинаковое количество строк, я беру количество строк только с первой колонки</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="s2">&quot;table/columns&quot;</span>
+            <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">target_object</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span>
+                <span class="n">n_cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_object</span><span class="p">)</span>
+                <span class="n">n_rows</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">obj</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">target_object</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;/data&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span></div>
+
+
+<div class="viewcode-block" id="get_chunks">
+<a class="viewcode-back" href="../api/utils.html#utils.get_chunks">[документация]</a>
+<span class="k">def</span> <span class="nf">get_chunks</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span> <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Разбивает данные (NumPy массив или Pandas DataFrame) на части (chunks).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (Union[np.ndarray, pd.DataFrame]): Входные данные для разбиения.</span>
+<span class="sd">        n_jobs (int): Количество частей (chunks), на которые нужно разбить данные.</span>
+<span class="sd">                      Должно быть положительным целым числом.</span>
+<span class="sd">        axis (int, optional): Ось, по которой происходит разбиение.</span>
+<span class="sd">                              0 - разбиение по строкам (по умолчанию).</span>
+<span class="sd">                              1 - разбиение по столбцам (доступно только для DataFrame).</span>
+<span class="sd">                              По умолчанию 0.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List[Union[np.ndarray, pd.DataFrame]]: Список частей данных. Тип элементов</span>
+<span class="sd">                                               списка соответствует типу входных данных.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Разбиение по столбцам (axis=1) доступно только для Pandas DataFrame.&quot;</span><span class="p">)</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">axis</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">chunk_size</span> <span class="o">=</span> <span class="n">size</span><span class="o">//</span><span class="n">n_jobs</span>
+    <span class="n">chunks</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">):</span>
+        <span class="n">chunks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">chunk_size</span><span class="p">]</span> <span class="k">if</span> <span class="n">axis</span> <span class="k">else</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">chunk_size</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">chunks</span></div>
+
+
+
+
+
+
+
+
+
+
 
 
 
